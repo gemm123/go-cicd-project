@@ -19,8 +19,11 @@ jobs:
           username: ${{ secrets.VPS_USERNAME }}
           key: ${{ secrets.VPS_SSH_KEY }}
           script: |
-            cd ~/app || git clone https://github.com/gemm123/go-cicd-project.git ~/app
-            cd ~/app
+            cd ~
+            if [ ! -d "gema" ]; then
+              git clone git@github.com:gemm123/go-cicd-project.git gema
+            fi
+            cd gema
             git pull origin main
             docker build -t go-cicd-project .
             docker stop go-cicd-project || true
